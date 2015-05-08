@@ -1,0 +1,14 @@
+---
+- name: Install Vim, Node, WordPress, MySQL, Nginx, and PHP-FPM
+  hosts: web
+  remote_user: vagrant
+  sudo: yes
+
+  roles:
+    - common
+    - vim
+    - mysql 
+    - nginx
+    - php-fpm
+    - wordpress
+    - node

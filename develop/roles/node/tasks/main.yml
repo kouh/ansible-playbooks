@@ -1,0 +1,17 @@
+---
+- name: install node rpm
+  yum: name=http://ftp.riken.jp/Linux/fedora/epel/6/i386/epel-release-6-8.noarch.rpm state=present
+
+- name: Install node
+  yum: name={{ item }} state=latest
+  with_items:
+    - nodejs
+    - npm
+
+# - name: Copy nginx configuration for wordpress
+#   template: src=default.conf dest=/etc/nginx/conf.d/default.conf
+#   notify: restart nginx
+
+# - name: enable nginx
+#   service: name=nginx state=started enabled=yes
+

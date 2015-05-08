@@ -1,0 +1,28 @@
+---
+- name: install module for vim 
+  yum: name={{item}} state=latest
+  with_items:
+    - ncurses-devel
+    - lua
+    - lua-devel
+
+- name: Clone vim
+  git: repo=https://github.com/vim/vim.git dest=~/vim version=master
+
+- name: configure for vim
+  command: >
+    ./configure
+    --with-features=huge
+    --enable-multibyte
+    --enable-luainterp=dynamic
+    --enable-gpm
+    --enable-cscope
+    --enable-fontset
+    chdir=~/vim 
+
+- name: make 
+  command: make chdir=~/vim
+
+- name: make install
+  command: make install chdir=~/vim
+
