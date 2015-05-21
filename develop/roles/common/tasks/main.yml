@@ -1,4 +1,16 @@
 ---
+- name: Add user
+  user: name={{user_name}} groups=wheel
+
+- name: Allow wheel group to use sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    insertafter: "^# %wheel\\s+ALL=\\(ALL\\)\\s+ALL"
+    line: "%wheel ALL=(ALL) ALL"
+    validate: "visudo -cf %s"
+    backup: yes
+
 - name: Install libselinux-python
   yum: name=libselinux-python state=latest
 

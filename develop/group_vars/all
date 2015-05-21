@@ -1,4 +1,5 @@
 ---
+user_name: vagrant
 ssh_port: 22
 # Which version of WordPress to deploy
 wp_version: latest
