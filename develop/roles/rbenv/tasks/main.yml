@@ -1,0 +1,32 @@
+---
+
+- name: Install dependencies
+  yum: name={{item}} state=latest
+  with_items:
+    - libffi-devel
+    - zlib-devel
+    - openssl-devel
+
+- name: Install ruby
+  yum: name=ruby state=latest
+
+- name: Install rbenv
+  git: repo=https://github.com/sstephenson/rbenv.git dest={{ rbenv_root }}
+
+- name: Install ruby-build
+  git: repo=https://github.com/sstephenson/ruby-build.git dest={{ rbenv_root }}/plugins/ruby-build
+
+- name: create shims dir
+  file: path={{ rbenv_root }}/shims state=directory
+
+- name: create versions dir
+  file: path={{ rbenv_root }}/versions state=directory
+
+- name: change mode of install dir
+  command: chmod -R g+rwxXs {{ rbenv_root }}
+
+- name: change owner of install dir
+  command: chgrp -R rbenv {{ rbenv_root }}
+
+- name: Set rbenv env file
+  copy: src=rbenv.sh dest=/etc/profile.d mode=0775
